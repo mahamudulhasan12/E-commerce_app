@@ -69,6 +69,7 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 10),
               TextField(
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
           
                   hintText: "Enter Phone Number",
