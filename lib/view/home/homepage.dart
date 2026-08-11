@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:ecommercace_app_ui/database/API%20Data/api_data.dart';
 import 'package:ecommercace_app_ui/database/localdata/product.dart';
 import 'package:ecommercace_app_ui/database/model/product_list.dart';
 import 'package:ecommercace_app_ui/view/home/widget/customdrawer.dart';
@@ -18,27 +19,26 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   // List<Map<dynamic , dynamic>> Product = [];
+  // List<PDataModel> Product = [];
+  List Product =[];
 
-  List<PDataModel> Product =[];
-  // int reting =3;
-  void getData() {
-    // Future.delayed(Duration(seconds: 2));
-    Product.clear();
-    Product.addAll(ProductList().data);
-    log("${Product[0].pName}");
-    setState(() {
-
-    });
+  void getData() async {
+    await Future.delayed(Duration(seconds: 2));
+    // Product.clear();
+    var a = await  ApiData().getProduct();
+    Product = a;
+   // log("==========${a.length}");
+   //  Product.addAll(ProductList().data);
+    // log("${Product[0].pName}");
+    setState(() {});
   }
 
   @override
   void initState() {
-
     getData();
 
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +65,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
@@ -92,13 +93,13 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               SizedBox(height: 10),
-              ListView.builder(
+              Product.isEmpty? Center(child: CircularProgressIndicator(strokeWidth: 3,)) : ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 itemCount: Product.length,
 
                 itemBuilder: (BuildContext context, index) {
-                  final P = Product[index];
+                  Map<String, dynamic> P = Product[index];
                   return Card(
                     child: Padding(
                       padding: const EdgeInsets.all(2),
@@ -117,7 +118,7 @@ class _HomePageState extends State<HomePage> {
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
                                   opacity: 1.5,
-                                  image: NetworkImage("${P.image}"),
+                                  image: NetworkImage("${P['image']}"),
                                 ),
                               ),
                             ),
@@ -128,32 +129,32 @@ class _HomePageState extends State<HomePage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    "ID : ${P.id}",
+                                    "ID : ${P["id"]}",
                                     style: TextStyle(
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
-                                    "${P.pName}",
+                                    "${P['title']}",
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold,
-                                        overflow: TextOverflow.ellipsis
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                   Text(
-                                    "Type :${P.type}",
+                                    "Type :${P["title"]}",
                                     style: TextStyle(
                                       fontSize: 13,
                                       fontWeight: FontWeight.bold,
-                                      overflow: TextOverflow.ellipsis
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                   Row(
                                     children: [
                                       Text(
-                                        "${P.rPrice}",
+                                        "${P["rating"]["count"]}",
                                         style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,
@@ -162,12 +163,13 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                       SizedBox(width: 10),
                                       Text(
-                                        "${P.dPrice}",
+                                        "${P["price"]}",
                                         style: TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black87,
-                                          decoration: TextDecoration.lineThrough,
+                                          decoration:
+                                              TextDecoration.lineThrough,
                                         ),
                                       ),
                                     ],
@@ -180,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Padding(
-                                      padding:  EdgeInsets.all(2.0),
+                                      padding: EdgeInsets.all(2.0),
                                       child: Row(
                                         children: [
                                           SizedBox(width: 5),
@@ -200,17 +202,20 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                   Flexible(
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        ...List.generate(5, (index){
+                                        ...List.generate(5, (index) {
                                           return Icon(
                                             Icons.star,
                                             size: 15,
-                                            color:index < P.rating ? Colors.amber : Colors.black ,
+                                            color: index < P['rating']['rate']
+                                                ? Colors.amber
+                                                : Colors.black,
                                           );
                                         }),
-
                                       ],
                                     ),
                                   ),
@@ -223,13 +228,19 @@ class _HomePageState extends State<HomePage> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  TextButton(onPressed: (){}, child: Text("View",style: TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.redAccent
-                                  ),))
+                                  TextButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      "View",
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: Colors.redAccent,
+                                      ),
+                                    ),
+                                  ),
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
