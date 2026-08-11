@@ -1,10 +1,13 @@
 import 'dart:developer';
 
 import 'package:ecommercace_app_ui/database/localdata/product.dart';
+import 'package:ecommercace_app_ui/database/model/product_list.dart';
 import 'package:ecommercace_app_ui/view/home/widget/customdrawer.dart';
 import 'package:ecommercace_app_ui/view/login/loginpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
+
+import '../../database/model/p_data_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,16 +17,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<Map<dynamic , dynamic>> Product = [];
+  // List<Map<dynamic , dynamic>> Product = [];
 
-  int reting =3;
-
+  List<PDataModel> Product =[];
+  // int reting =3;
   void getData() {
     // Future.delayed(Duration(seconds: 2));
     Product.clear();
-    
-    Product.addAll(Products.pData);
-    
+    Product.addAll(ProductList().data);
+    log("${Product[0].pName}");
     setState(() {
 
     });
@@ -31,10 +33,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+
     getData();
-    log("======122112==");
+
     super.initState();
   }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,12 +98,13 @@ class _HomePageState extends State<HomePage> {
                 itemCount: Product.length,
 
                 itemBuilder: (BuildContext context, index) {
-                  Map P = Product[index];
+                  final P = Product[index];
                   return Card(
                     child: Padding(
-                      padding: const EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(2),
                       child: Container(
-                        height: 130,
+                        padding: EdgeInsets.only(right: 10),
+                        height: 135,
                         width: double.infinity,
                         color: Colors.white,
                         child: Row(
@@ -111,100 +117,119 @@ class _HomePageState extends State<HomePage> {
                                 image: DecorationImage(
                                   fit: BoxFit.cover,
                                   opacity: 1.5,
-                                  image: NetworkImage("${P["image"]}"),
+                                  image: NetworkImage("${P.image}"),
                                 ),
                               ),
                             ),
                             SizedBox(width: 20),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "${P["name"]}",
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Text(
-                                  "Type :${P["type"]}",
-                                  style: TextStyle(
-                                    fontSize: 13,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "${P["regular_price"]}",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.red,
-                                      ),
+                            Expanded(
+                              flex: 2,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "ID : ${P.id}",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      "${P["discount_price"]}",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black87,
-                                        decoration: TextDecoration.lineThrough,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  height: 30,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                    color: Colors.black12,
-                                    borderRadius: BorderRadius.circular(5),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(2.0),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(width: 5),
-                                        Icon(Icons.shopping_cart, size: 20),
-                                        SizedBox(width: 10),
-                                        Text(
-                                          "Buy Now",
-                                          style: TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black,
-                                          ),
+                                  Text(
+                                    "${P.pName}",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                        overflow: TextOverflow.ellipsis
+                                    ),
+                                  ),
+                                  Text(
+                                    "Type :${P.type}",
+                                    style: TextStyle(
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.bold,
+                                      overflow: TextOverflow.ellipsis
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "${P.rPrice}",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.red,
                                         ),
+                                      ),
+                                      SizedBox(width: 10),
+                                      Text(
+                                        "${P.dPrice}",
+                                        style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black87,
+                                          decoration: TextDecoration.lineThrough,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    height: 30,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      color: Colors.black12,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                    child: Padding(
+                                      padding:  EdgeInsets.all(2.0),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(width: 5),
+                                          Icon(Icons.shopping_cart, size: 20),
+                                          SizedBox(width: 10),
+                                          Text(
+                                            "Buy Now",
+                                            style: TextStyle(
+                                              fontSize: 13,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        ...List.generate(5, (index){
+                                          return Icon(
+                                            Icons.star,
+                                            size: 15,
+                                            color:index < P.rating ? Colors.amber : Colors.black ,
+                                          );
+                                        }),
+
                                       ],
                                     ),
                                   ),
-                                ),
-                                SizedBox(height: 5),
-                                Row(
-
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    ...List.generate(5, (index){
-                                      return Icon(
-                                        Icons.star,
-                                        size: 18,
-                                        color:index <reting ? Colors.amber : Colors.black ,
-                                      );
-                                    }),
-                                    SizedBox(width: 50),
-                                    Text(
-                                      "ID : ${P["id"]}",
-                                      style: TextStyle(
-                                        fontSize: 8,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
+                            Expanded(
+                              flex: 1,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  TextButton(onPressed: (){}, child: Text("View",style: TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.redAccent
+                                  ),))
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       ),

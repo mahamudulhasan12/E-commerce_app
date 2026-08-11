@@ -1,4 +1,4 @@
-import 'package:ecommercace_app_ui/database/model/p_data.dart';
+import 'package:ecommercace_app_ui/database/model/p_data_model.dart';
 
 class Products {
   static List<Map<dynamic , dynamic>> pData = [
