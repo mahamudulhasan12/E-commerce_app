@@ -1,4 +1,4 @@
-import 'package:ecommercace_app_ui/homepage.dart';
+import 'package:ecommercace_app_ui/view/home/homepage.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {

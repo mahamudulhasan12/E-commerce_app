@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AboutPage extends StatelessWidget {
-  const AboutPage({super.key});
+   AboutPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +18,26 @@ class AboutPage extends StatelessWidget {
         child: ListView(
           padding: const EdgeInsets.all(20),
           children: [
-            const CircleAvatar(
-              radius: 60,
-                
-              backgroundImage: NetworkImage(
+            Container(
+              height: 80,
+              width: 80,
 
-                  "https://scontent.fdac31-2.fna.fbcdn.net/v/t39.30808-6/491404023_691407226784795_3020791433329691113_n.jpg?stp=dst-jpg_tt6&cstp=mx1000x993&ctp=p526x296&_nc_cat=100&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeGEjzAQoJEgKVD4F6NRyCmPcIc_gSVHoPRwhz-BJUeg9Lp3ep9PUWHmSKKFqyf1cSRcCKX6BLV9CTlOqtuvi5Af&_nc_ohc=mkN0nNf8vpQQ7kNvwHqBd5-&_nc_oc=Adq1nA0Do_a_mNIo_GIXrPftacS3gBRxL7WId1esWJRp6LfJfeqirIEVw9Q6iFQGXrg&_nc_zt=23&_nc_ht=scontent.fdac31-2.fna&_nc_gid=0uVXenvqZJEFP7lmiqmXVA&_nc_ss=7b2a8&oh=00_AQC6je5yZ84Ds-acIsK8ToSYGwf6y1KIGe-gZRyMOwsHlQ&oe=6A4EF098"),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(width: 1,color: Colors.grey.shade300),
+                image: DecorationImage(
+                  image: NetworkImage("https://media.licdn.com/dms/image/v2/D5603AQGR8acUO7dPqg/profile-displayphoto-scale_400_400/B56Zx6tHZ6IgAg-/0/1771585180108?e=1787788800&v=beta&t=2fABgjhjnxVoWVMtGQv_kgugEwz0OK2JM-ln_IOWe7w")
+                )
+              ),
+              
+            //   child: CircleAvatar(
+            //     radius: 20,
+            //     backgroundImage: NetworkImage("https://media.licdn.com/dms/image/v2/D5603AQGR8acUO7dPqg/profile-displayphoto-scale_400_400/B56Zx6tHZ6IgAg-/0/1771585180108?e=1787788800&v=beta&t=2fABgjhjnxVoWVMtGQv_kgugEwz0OK2JM-ln_IOWe7w"),
+            // ),
             ),
+            SizedBox(height: 20),
 
-            const SizedBox(height: 20),
-
-            const Center(
+             Center(
               child: Text(
                 "MD Mahamudul Hasan",
                 style: TextStyle(
@@ -38,9 +47,9 @@ class AboutPage extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 8),
+             SizedBox(height: 8),
 
-            const Center(
+             Center(
               child: Text(
                 "Flutter Developer",
                 style: TextStyle(

@@ -1,7 +1,7 @@
-import 'package:ecommercace_app_ui/login/aboutpage.dart';
+import 'package:ecommercace_app_ui/view/about/aboutpage.dart';
 import 'package:flutter/material.dart';
 
-import '../login/loginpage.dart';
+import '../../login/loginpage.dart';
 
 class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
